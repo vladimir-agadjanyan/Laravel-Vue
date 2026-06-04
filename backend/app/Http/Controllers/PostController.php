@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Dflydev\DotAccessData\Data;
 use Illuminate\Http\JsonResponse;
@@ -17,7 +18,7 @@ class PostController extends Controller
     {
         $posts = auth()->user()->posts()->orderBy("created_at", "desc")->paginate(5);
 
-        return response()->json($posts);
+        return PostResource::collection($posts);
     }
 
     /**

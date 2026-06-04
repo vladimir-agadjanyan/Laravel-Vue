@@ -5,11 +5,25 @@ import { TailwindPagination } from 'laravel-vue-pagination';
 
 type Post = {
   id: number;
+  slug: string;
   title: string;
-  is_published: boolean;
+  body: string;
+  published: boolean;
+  createdAt: string;
 }
 
-const laravelData = ref({});
+type laravelData = {
+  data: Post[];
+  links: any;
+  meta: any;
+}
+
+const laravelData = ref<laravelData>({
+  data: [],
+  links: {},
+  meta: {},
+
+});
 
 const getResults = async (page = 1) => {
     const {data} = await axiosInstance.get(`/dashboard/posts?page=${page}`);
@@ -32,7 +46,9 @@ const getResults = async (page = 1) => {
               <tr>
                   <th scope="col" class="px-6 py-3 font-medium">ID</th>
                   <th scope="col" class="px-6 py-3 font-medium">Title</th>
+                  <th scope="col" class="px-6 py-3 font-medium">Slug</th>
                   <th scope="col" class="px-6 py-3 font-medium">Published</th>
+                  <th scope="col" class="px-6 py-3 font-medium">Created</th>
                   <th scope="col" class="px-6 py-3 font-medium">Actions</th>
               </tr>
           </thead>
@@ -42,15 +58,11 @@ const getResults = async (page = 1) => {
                   <th scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
                       {{ post.id }}
                   </th>
-                  <td class="px-6 py-4">
-                      {{ post.title }}
-                  </td>
-                  <td class="px-6 py-4">
-                      {{ post.is_published }}
-                  </td>
-                  <td class="px-6 py-4">
-                      Edit/Delete
-                  </td>
+                  <td class="px-6 py-4">{{ post.title }}</td>
+                  <td class="px-6 py-4">{{ post.slug }}</td>
+                  <td class="px-6 py-4">{{ post.published }}</td>
+                  <td class="px-6 py-4">{{ post.createdAt }}</td>
+                  <td class="px-6 py-4"> Edit/Delete </td>
               </tr>
 
             </template>
