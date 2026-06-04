@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@source "../../formkit.theme.ts";
+@source "../../formkit.config.ts";
+
+body {
+  @apply bg-gray-100;
+}
