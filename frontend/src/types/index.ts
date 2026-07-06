@@ -16,3 +16,12 @@ export interface User {
   email: string;
   token: string;
 }
+
+export interface Post {
+  id: number;
+  slug: string;
+  title: string;
+  body: string;
+  published: boolean;
+  createdAt: string;
+}

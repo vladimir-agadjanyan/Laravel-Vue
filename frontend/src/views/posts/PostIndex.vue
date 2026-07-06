@@ -2,15 +2,9 @@
 import axiosInstance from '@/lib/axios';
 import { onMounted, ref } from 'vue';
 import { TailwindPagination } from 'laravel-vue-pagination';
+import {EyeIcon} from '@heroicons/vue/24/solid';
+import type { Post } from '@/types';
 
-type Post = {
-  id: number;
-  slug: string;
-  title: string;
-  body: string;
-  published: boolean;
-  createdAt: string;
-}
 
 type laravelData = {
   data: Post[];
@@ -49,20 +43,24 @@ const getResults = async (page = 1) => {
                   <th scope="col" class="px-6 py-3 font-medium">Slug</th>
                   <th scope="col" class="px-6 py-3 font-medium">Published</th>
                   <th scope="col" class="px-6 py-3 font-medium">Created</th>
-                  <th scope="col" class="px-6 py-3 font-medium">Actions</th>
+                  <th scope="col" class="px-6 py-3 font-medium">Edit/Delete</th>
               </tr>
           </thead>
           <tbody>
             <template v-if="laravelData.data?.length > 0">
               <tr v-for="post in laravelData.data" :key="post.id" class="bg-neutral-primary border-b border-default">
-                  <th scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
-                      {{ post.id }}
-                  </th>
+                  <td class="px-6 py-4">{{ post.id }}</td>
                   <td class="px-6 py-4">{{ post.title }}</td>
                   <td class="px-6 py-4">{{ post.slug }}</td>
                   <td class="px-6 py-4">{{ post.published }}</td>
                   <td class="px-6 py-4">{{ post.createdAt }}</td>
-                  <td class="px-6 py-4"> Edit/Delete </td>
+                  <td class="px-6 py-4">
+                    <div class="flex space-x-4">
+                      <RouterLink :to="{ name: 'postView', params: { id: post.id } }">
+                        <EyeIcon class="w-5 h-5 text-blue-500 dark-text-blue-400 hover:text-blue-700" />
+                      </RouterLink>
+                    </div>
+                  </td>
               </tr>
 
             </template>
